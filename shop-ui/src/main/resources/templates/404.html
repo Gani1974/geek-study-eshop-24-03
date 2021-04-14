@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="fragments/head.html :: head">
+    </head>
+
+    <body>
+        
+        <!--================Menu Area =================-->
+        <header th:replace="fragments/main_menu.html :: main_menu">
+        </header>
+        <!--================End Menu Area =================-->
+        
+        <!--================login Area =================-->
+        <section class="error_area p_100">
+            <div class="container">
+                <div class="error_inner">
+                    <h4>404</h4>
+                    <h5>Error - Not Found</h5>
+                    <p>Sorrey We’re not able to find what you looking for</p>
+                    <h6>back to <a href="index.html">Home</a></h6>
+                </div>
+            </div>
+        </section>
+        <!--================End login Area =================-->
+        
+        <!--================Footer Area =================-->
+        <footer th:replace="fragments/footer.html :: footer"></footer>
+        <!--================End Footer Area =================-->
+
+
+        <script th:replace="fragments/scripts.html :: scripts"></script>
+    </body>
+</html>
