@@ -19,13 +19,15 @@
                         <div class="cart_product_list">
                             <h3 class="cart_single_title">Discount Cupon</h3>
                             <div class="table-responsive-md">
+
+                                <form id="cartItemsForm" th:method="post" th:action="@{/cart/update_all_qty}">
                                 <table class="table">
                                     <thead>
                                         <tr>
                                             <th scope="col"></th>
                                             <th scope="col">product</th>
                                             <th scope="col">price</th>
-                                            <th scope="col">qunatity</th>
+                                            <th scope="col">quantity</th>
                                             <th scope="col">total</th>
                                         </tr>
                                     </thead>
@@ -50,7 +52,7 @@
                                                 </div>
                                             </td>
                                             <td><p>$[[${lineItem.productRepr.price}]]</p></td>
-                                            <td><input type="text" th:value="${lineItem.qty}"></td>
+                                            <td><input type="text" th:name="${lineItem.productId}" th:value="${lineItem.qty}"></td>
                                             <td><p>[[${lineItem.total}]]</p></td>
                                         </tr>
                                     <tr bgcolor="red" style="font-weight: bold;">
@@ -64,6 +66,8 @@
 
                                     </tbody>
                                 </table>
+                                </form>
+
                             </div>
                         </div>
                         <div class="calculate_shoping_area">
@@ -108,7 +112,7 @@
                                         <li><a href="#"><span>Totals</span> $400.00</a></li>
                                     </ul>
                                 </div>
-                                <button type="submit" class="btn btn-primary update_btn">update cart</button>
+                                <button type="submit" form="cartItemsForm" class="btn btn-primary update_btn">update cart</button>
                                 <button type="submit" class="btn btn-primary checkout_btn">proceed to checkout</button>
                             </div>
                         </div>

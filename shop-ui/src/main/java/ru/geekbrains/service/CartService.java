@@ -5,6 +5,7 @@ import ru.geekbrains.service.model.LineItem;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface CartService {
 
@@ -13,6 +14,8 @@ public interface CartService {
     void removeProductQty(ProductRepr productRepr, String color, String material, int qty);
 
     List<LineItem> getLineItems();
+
+    void updateAllQty(Map<Long, Integer> productIdQtyMap);
 
     BigDecimal getTotalPrice();
 

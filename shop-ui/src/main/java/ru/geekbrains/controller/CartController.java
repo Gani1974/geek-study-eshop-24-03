@@ -1,20 +1,23 @@
 package ru.geekbrains.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.controller.repr.CartItemRepr;
 import ru.geekbrains.controller.repr.ProductRepr;
-import ru.geekbrains.persist.model.Product;
 import ru.geekbrains.service.CartService;
 import ru.geekbrains.service.ProductService;
 
-import java.util.Optional;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cart")
 public class CartController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CartController.class);
 
     public final CartService cartService;
 
@@ -41,12 +44,27 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    @GetMapping("/add_product/{id}")
+    public String addProductToCart(@PathVariable("id") Long productId){
+        ProductRepr productRepr = productService.findById(productId)
+                .orElseThrow(NotFoundException::new);
+        cartService.addProductQty(productRepr,"","",1);
+        return "redirect:/cart";
+    }
+
     @DeleteMapping("/product/{qty}/delete")
     public String removeFromCart(@RequestParam(value = "qty") int qty,
                                  @RequestParam(value = "productId") Long productId){
         ProductRepr productRepr = productService.findById(productId)
                 .orElseThrow(NotFoundException::new);
         cartService.removeProductQty(productRepr, "", "", qty);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/update_all_qty")
+    public String updateAllQty(@RequestParam Map<Long, Integer> paramMap) {
+        logger.info("Product Qty Map: {}", paramMap);
+        cartService.updateAllQty(paramMap);
         return "redirect:/cart";
     }
 }

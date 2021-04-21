@@ -42,6 +42,15 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void updateAllQty(Map<Long, Integer> productIdQtyMap) {
+        //TODO
+//        for(Map.Entry<Long,Integer> entry : productIdQtyMap.entrySet()){
+//            LineItem lineItem = lineItems.get(productIdQtyMap.)
+////            lineItems.put(lineItems.keySet(getLineItems().get(entry.getKey())),entry.getValue());
+//            lineItems.put(lineItem.setProductId(productIdQtyMap.get()),entry.getValue());
+        }
+
+    @Override
     public BigDecimal getTotalPrice() {
         BigDecimal totalPrice = new BigDecimal(0);
         for (LineItem lineItem : lineItems.keySet()){

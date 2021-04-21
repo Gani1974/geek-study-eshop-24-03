@@ -1,5 +1,8 @@
 package ru.geekbrains.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.controller.repr.ProductRepr;
@@ -15,11 +18,27 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
+    private final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
     private final ProductRepository productRepository;
 
+    @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+
+//    public Page<ProductRepr> findWithFilter(Integer page, Integer size,
+//                                 String sortField) {
+////        Specification<Product> spec = ProductSpecification.fetchPictures();
+//        Specification<Product> spec = Specification.where(null);
+//        if (sortField != null && !sortField.isBlank()) {
+//            return productRepository.findAll(spec, PageRequest.of(page, size,
+//                    Sort.by(sortField)))
+//                    .map(ProductRepr::new);
+//        }
+//        return productRepository.findAll(spec, PageRequest.of(page, size))
+//                .map(ProductRepr::new);
+
 
     public Optional<ProductRepr> findById(Long id) {
         return productRepository.findById(id)
@@ -44,4 +63,19 @@ public class ProductService {
                 p.getPictures().stream().map(Picture::getId).collect(Collectors.toList())
         );
     }
+
+//    public List<ProductRepr> findAllProducts(Integer pageNo, Integer pageSize, String sortBy) {
+//        Pageable paging = (Pageable) PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
+//        Page<ProductRepr> pageResult = productRepository.findAllWithPictureFetch(paging);
+//    }
+
+//    public List<Product> findPaginated(int pageNo, int pageSize){
+//
+//        Pageable paging = PageRequest.of(pageNo,pageSize);
+//        Page<Product> pagedResult = productRepository.findAllByPrice(paging);
+//
+//
+//
+//    }
+
 }

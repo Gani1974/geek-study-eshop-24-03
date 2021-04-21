@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:custom="http://www.w3.org/1999/xhtml">
 
     <head th:replace="fragments/head.html :: head">
     </head>
@@ -27,8 +27,8 @@
                                         <h4>SORT BY :</h4>
                                         <select class="selectpicker">
                                             <option>Name</option>
-                                            <option>Name 2</option>
-                                            <option>Name 3</option>
+                                            <option>Price</option>
+                                            <option>Category</option>
                                         </select>
                                     </div>
                                     <div class="third_fillter">
@@ -58,7 +58,7 @@
                                             <div class="l_p_text">
                                                <ul>
                                                     <li class="p_icon"><a th:href="@{/product/{id}(id = ${prod.id})}"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
+                                                   <li><a class="add_cart_btn" th:href="@{/cart/add_product/{id}(id = ${prod.id})}">Add To Cart</a></li>                                                    </li>
                                                     <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
                                                 </ul>
                                                 <h4>[[${prod.name}]]</h4>
