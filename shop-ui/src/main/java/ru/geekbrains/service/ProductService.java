@@ -64,18 +64,4 @@ public class ProductService {
         );
     }
 
-//    public List<ProductRepr> findAllProducts(Integer pageNo, Integer pageSize, String sortBy) {
-//        Pageable paging = (Pageable) PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
-//        Page<ProductRepr> pageResult = productRepository.findAllWithPictureFetch(paging);
-//    }
-
-//    public List<Product> findPaginated(int pageNo, int pageSize){
-//
-//        Pageable paging = PageRequest.of(pageNo,pageSize);
-//        Page<Product> pagedResult = productRepository.findAllByPrice(paging);
-//
-//
-//
-//    }
-
 }
