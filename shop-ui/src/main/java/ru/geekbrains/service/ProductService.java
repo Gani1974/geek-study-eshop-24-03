@@ -2,7 +2,9 @@ package ru.geekbrains.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.controller.repr.ProductRepr;
@@ -22,37 +24,27 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
-//    public Page<ProductRepr> findWithFilter(Integer page, Integer size,
-//                                 String sortField) {
-////        Specification<Product> spec = ProductSpecification.fetchPictures();
-//        Specification<Product> spec = Specification.where(null);
-//        if (sortField != null && !sortField.isBlank()) {
-//            return productRepository.findAll(spec, PageRequest.of(page, size,
-//                    Sort.by(sortField)))
-//                    .map(ProductRepr::new);
-//        }
-//        return productRepository.findAll(spec, PageRequest.of(page, size))
-//                .map(ProductRepr::new);
-
 
     public Optional<ProductRepr> findById(Long id) {
         return productRepository.findById(id)
                 .map(ProductService::mapToRepr);
     }
 
-    public List<ProductRepr> findByFilter(Long categoryId) {
-        Specification<Product> spec = ProductSpecification.fetchPictures();
+    public Page<ProductRepr> findByFilter(Long categoryId, Integer page, Integer size) {
+//        Specification<Product> spec = ProductSpecification.fetchPictures();
+        Specification<Product> spec = Specification.where(null);
         if (categoryId != null) {
             spec = spec.and(ProductSpecification.byCategory(categoryId));
         }
-        return productRepository.findAll(spec).stream()
+        Page<Long> ids = productRepository.findAll(spec, PageRequest.of(page-1,size)).map(Product::getId);
+
+        List<ProductRepr> allByIds = productRepository.findAllByIds(ids.getContent()).stream()
                 .map(ProductService::mapToRepr)
                 .collect(Collectors.toList());
+        return new PageImpl<>(allByIds,PageRequest.of(page-1,size),ids.getTotalElements());
     }
 
     private static ProductRepr mapToRepr(Product p) {
@@ -63,19 +55,5 @@ public class ProductService {
                 p.getPictures().stream().map(Picture::getId).collect(Collectors.toList())
         );
     }
-
-//    public List<ProductRepr> findAllProducts(Integer pageNo, Integer pageSize, String sortBy) {
-//        Pageable paging = (Pageable) PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
-//        Page<ProductRepr> pageResult = productRepository.findAllWithPictureFetch(paging);
-//    }
-
-//    public List<Product> findPaginated(int pageNo, int pageSize){
-//
-//        Pageable paging = PageRequest.of(pageNo,pageSize);
-//        Page<Product> pagedResult = productRepository.findAllByPrice(paging);
-//
-//
-//
-//    }
 
 }

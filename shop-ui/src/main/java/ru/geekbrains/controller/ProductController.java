@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.geekbrains.persist.repo.CategoryRepository;
 import ru.geekbrains.service.ProductService;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping
 public class ProductController {
@@ -29,17 +27,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public String productListPage(@RequestParam(name = "page") Optional<Integer> page,
-            @RequestParam(name = "size") Optional<Integer> size,
-            @RequestParam(name = "sortField") Optional<String> sortField,
-            @RequestParam(name = "sortOrder") Optional<String> sortOrder,
-            @RequestParam(value = "categoryId", required = false) Long categoryId,
+    public String productListPage(@RequestParam(value = "categoryId", required = false) Long categoryId,
+                                  @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+                                  @RequestParam(value = "size", required = false, defaultValue = "4") Integer size,
                                   Model model) {
         logger.info("Product list page");
 
         model.addAttribute("categories", categoryRepository.findAll());
-//        model.addAttribute("products", productService.findAll(page,size,sortField,sortOrder));
-        model.addAttribute("products", productService.findByFilter(categoryId));
+        model.addAttribute("products", productService.findByFilter(categoryId,page,size));
 
         return "categories-left-sidebar";
     }
