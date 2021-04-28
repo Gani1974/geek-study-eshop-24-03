@@ -6,6 +6,7 @@ public class ChatMessage {
 
     private String username;
 
+
     private String message;
 
     private LocalDateTime localDateTime;
