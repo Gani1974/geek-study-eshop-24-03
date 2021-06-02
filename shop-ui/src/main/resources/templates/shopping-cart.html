@@ -35,7 +35,7 @@
 
                                         <tr th:each="lineItem : ${lineItems}">
                                             <th scope="row">
-                                                <form th:method="delete" th:action="@{/cart/product/{id}/delete(id=${lineItem.productId})}" class="d-inline">
+                                                <form th:method="delete" th:action="@{/cart}" class="d-inline">
                                                 <input type="hidden" name="qty" th:value="${lineItem.qty}">
                                                     <input type="hidden" name="productId" th:value="${lineItem.productId}">
                                                 <input type="image" src="img/icon/close-icon.png" alt=""/>

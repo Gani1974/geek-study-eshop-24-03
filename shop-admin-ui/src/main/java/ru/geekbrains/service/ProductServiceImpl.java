@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import ru.geekbrains.aspect.TrackTime;
 import ru.geekbrains.controllers.repr.ProductRepr;
 import ru.geekbrains.error.NotFoundException;
 import ru.geekbrains.persist.model.Picture;
@@ -34,6 +35,7 @@ public class ProductServiceImpl implements ProductService, Serializable {
         this.pictureService = pictureService;
     }
 
+    @TrackTime
     @Override
     @Transactional
     public List<ProductRepr> findAll() {

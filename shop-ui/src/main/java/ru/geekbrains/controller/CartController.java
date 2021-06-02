@@ -32,7 +32,6 @@ public class CartController {
     @GetMapping
     public String mainPage(Model model) {
         model.addAttribute("lineItems", cartService.getLineItems());
-        model.addAttribute("totalPrice", cartService.getTotalPrice());
         return "shopping-cart";
     }
 
@@ -52,12 +51,19 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @DeleteMapping("/product/{qty}/delete")
-    public String removeFromCart(@RequestParam(value = "qty") int qty,
-                                 @RequestParam(value = "productId") Long productId){
-        ProductRepr productRepr = productService.findById(productId)
-                .orElseThrow(NotFoundException::new);
-        cartService.removeProductQty(productRepr, "", "", qty);
+//    @DeleteMapping("/product/{qty}/delete")
+//    public String removeFromCart(@RequestParam(value = "qty") int qty,
+//                                 @RequestParam(value = "productId") Long productId){
+//        ProductRepr productRepr = productService.findById(productId)
+//                .orElseThrow(NotFoundException::new);
+//        cartService.removeProductQty(productRepr, "", "", qty);
+//        return "redirect:/cart";
+//    }
+
+    @DeleteMapping
+    public String delete(@RequestParam("productId") Long productId){
+        cartService.removeProduct(new ProductRepr(productId,null,null,
+        null,null),"","");
         return "redirect:/cart";
     }
 
